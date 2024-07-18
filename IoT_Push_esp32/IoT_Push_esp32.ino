@@ -1,24 +1,17 @@
-#define BLYNK_TEMPLATE_ID "TMPL65HKH9IXx"
-#define BLYNK_TEMPLATE_NAME "komputer"
-#define BLYNK_AUTH_TOKEN "esT0pcnqIMBFixUqjPyaRjieXsa9Q3HD"
-
-#define BLYNK_PRINT Serial
-
-#include <WiFi.h>
-#include <WiFiClient.h>
-#include <BlynkSimpleEsp32.h>
-
-char auth[] = BLYNK_AUTH_TOKEN;
-char ssid[] = "Ratio";
-char pass[] = "20051510Am";
-
-void setup()
-{
-  Serial.begin(115200);
-  Blynk.begin(auth, ssid, pass);
+#include "thingProperties.h"
+void setup() {
+  pinMode(2, OUTPUT);
+  Serial.begin(9600);
+  delay(1500);
+  initProperties();
+  ArduinoCloud.begin(ArduinoIoTPreferredConnection);
+  setDebugMessageLevel(2);
+  ArduinoCloud.printDebugInfo();
 }
-
-void loop()
-{
-  Blynk.run();
+void loop() {
+  ArduinoCloud.update();
+  if (saklar) digitalWrite(2, HIGH);
+  else digitalWrite(2, LOW);
+}
+void onSaklarChange() {
 }
